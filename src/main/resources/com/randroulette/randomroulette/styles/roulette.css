@@ -1,0 +1,19 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+
+/* colors selected
+.color1 {color: #232330;}
+.color2 {color: #473e5b;}
+.color3 {color: #7b678d;}
+.color4 {color: #bd97d0;}
+.color5 {color: #e8c8e8;}
+*/
+.mainFxmlClass {
+}
+
+.text-area .content {
+   -fx-background-color: #e8c8e8 ;
+}
+
