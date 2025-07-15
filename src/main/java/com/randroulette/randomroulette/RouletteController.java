@@ -58,6 +58,8 @@ public class RouletteController implements Initializable {
     private TextArea randomArea;
     @FXML
     private Button exportBtn;
+    @FXML
+    private Button deleteBtn;
     /**
      * Initializes the controller class.
      */
@@ -69,12 +71,14 @@ public class RouletteController implements Initializable {
         exportBtn.setVisible(false);
         randomArea.setEditable(false);
         randomArea.setVisible(false);
+        deleteBtn.setVisible(false);
         Animate.setScaleAndFade(exitButton);
         Animate.setScaleAndFade(addButton);
         Animate.setScaleAndFade(clearButton);
         Animate.setScaleAndFade(getBackButton);
         Animate.setScaleAndFade(btnRandList);
         Animate.setScaleAndFade(exportBtn);
+        Animate.setScaleAndFade(deleteBtn);
         try {
             showMessage("Words need to be separated by ENTER",false,"");
         } catch (IOException ex) {
@@ -83,6 +87,7 @@ public class RouletteController implements Initializable {
     }    
 
     private void spin(List<String> strList) {
+        deleteBtn.setVisible(false);
         randomArea.setVisible(false);
         textArea.setVisible(false);
         spinLabel.setVisible(true);
@@ -101,6 +106,7 @@ public class RouletteController implements Initializable {
             tm.getKeyFrames().add(kFrame);
         }
         tm.setOnFinished(e->{
+            deleteBtn.setVisible(true);
             addButton.setVisible(true);
             btnRandList.setVisible(true);
             clearButton.setVisible(true);
@@ -154,6 +160,7 @@ public class RouletteController implements Initializable {
         spinLabel.setVisible(false);
         getBackButton.setVisible(false);
         exportBtn.setVisible(false);
+        deleteBtn.setVisible(false);
     }
     
     public void showMessage(String msg,boolean switchButton, String txtBtn) throws IOException{
@@ -175,6 +182,7 @@ public class RouletteController implements Initializable {
 
     @FXML
     private void getBack(ActionEvent event) {
+        deleteBtn.setVisible(false);
         randomArea.setVisible(false);
         spinLabel.setVisible(false);
         textArea.setVisible(true);
@@ -224,6 +232,7 @@ public class RouletteController implements Initializable {
     
     private void showRandomList(List<String> randList){
         randomArea.clear();
+        deleteBtn.setVisible(false);
         randomArea.setVisible(true);
         textArea.setVisible(false);
         addButton.setVisible(false);
@@ -260,5 +269,18 @@ public class RouletteController implements Initializable {
     private void makeRandomList(ActionEvent event) throws InterruptedException {
         spinLabel.setVisible(false);
         addText(true);
+    }
+
+    @FXML
+    private void deleteFromList(ActionEvent event) {
+        List<String> content = extractText(textArea.getText());
+        String str = spinLabel.getText();
+        content.remove(str);
+        StringBuilder aux = new StringBuilder();
+        for(String temp : content){
+            aux.append(temp).append('\n');
+        }
+        textArea.setText(aux.toString());
+        getBack(event);
     }
 }
